@@ -7,20 +7,21 @@
 sudo apt-get update -y
 sudo apt-get -y upgrade
 
+sudo apt-get install openssh-server
+sudo service ssh start
+sudo systemctl enable ssh
+sudo apt-get install net-tools
+
 wget https://go.dev/dl/go1.19.linux-amd64.tar.gz
 sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.19.linux-amd64.tar.gz
 
-
+mkdir ~/go
+echo "export GOPATH=~/go" >> ~/.bashrc
+echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc
 
 sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
 sudo apt-get install -y vim
-
-
-mkdir ~/go
-echo "export GOPATH=~/go" >> ~/.bashrc
-#echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin" >> ~/.bashrc
-
 
 mkdir ~/.vim
 cd ~/.vim
@@ -50,7 +51,6 @@ git clone https://github.com/Valloric/YouCompleteMe.git
 cd YouCompleteMe
 ./install.sh
 
-sudo apt update
 sudo apt install -y build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev wget libbz2-dev
 wget https://www.python.org/ftp/python/3.8.0/Python-3.8.0.tgz
 tar -xf Python-3.8.0.tgz
@@ -59,7 +59,10 @@ cd Python-3.8.0
 make -j 8
 sudo make altinstall
 
-wget https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/clang+llvm-14.0.6-aarch64-linux-gnu.tar.xz
-tar -C /usr/local -xvf clang+llvm-14.0.6-aarch64-linux-gnu.tar.xz
+#wget https://github.com/llvm/llvm-project/releases/download/llvmorg-14.0.6/clang+llvm-14.0.6-aarch64-linux-gnu.tar.xz
+#tar -C /usr/local -xvf clang+llvm-14.0.6-aarch64-linux-gnu.tar.xz
+
+sudo bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+sudo apt install -y libc++-15-dev libc++abi-15-dev
 
 echo "export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin/usr/local/clang+llvm-14.0.6-linux-gnu" >> ~/.bashrc
